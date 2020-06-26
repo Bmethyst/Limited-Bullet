@@ -5,14 +5,24 @@ using UnityEngine;
 public class EnemyDamage : MonoBehaviour
 {
 
-    public int health;
+    public float health;
     public GameObject deathEffect;
+    Animator anim;
+    Rigidbody2D rigid;
+    SpriteRenderer spriteRenderer;
+
     // Start is called before the first frame update
     void Start()
     {
         
     }
+    private void Awake()
+    {
+        rigid = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
 
+    }
     // Update is called once per frame
     void Update()
     {
@@ -23,7 +33,22 @@ public class EnemyDamage : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage) {
+    public void TakeDamage(float damage) {
+        anim.SetTrigger("Damaged");
+        rigid.velocity = new Vector2(0, rigid.velocity.y);
         health -= damage;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "PlayerProjectile") {
+            OnDamaged();
+            Debug.Log(collision);
+        }
+    }
+
+    void OnDamaged() {
+        anim.SetTrigger("Damaged");
+        rigid.velocity = new Vector2(0, rigid.velocity.y);
     }
 }

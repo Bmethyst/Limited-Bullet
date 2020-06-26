@@ -4,22 +4,28 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public float offset;
+    Animator anim;
+    GameObject Player;
 
     public GameObject Bullet;
-    GameObject Player;
     public Transform shotPoint;
+    public Transform pos;
+    public Vector2 boxSize;
 
-    public float maxShotDelay; // 총알을 쏜 뒤 시작되는 타이머
-    float curShotDelay; // 총알을 쏘는 간격
+    public float shotCoolTime; // 마법 공격 쿨타임
+    public float atkCoolTime; // 물리 공격 쿨타임
+    float curAtkCoolTime; // 이전 공격 간 간격
     float rotateDegree;
     private float dy;
     private float dx;
-    public float shotPower;
+   
+    public float shotPower; // 마법공격의 발사 속도
+    public float atkDamage; // 물리 공격의 데미지
     private void Awake() {
         Player = GameObject.Find("Player");
+        anim = Player.GetComponent<Animator>();
+
     }
-    // Update is called once per frame
     void Update()
     {
         Vector3 mousePos = Input.mousePosition;
@@ -39,31 +45,55 @@ public class PlayerAttack : MonoBehaviour
 		else
 			transform.rotation = Quaternion.Euler(0f, 0f, rotateDegree);
 
-        //if (timeBulletShots <= 0) {
-        //    if (Input.GetMouseButton(1)) {
-        //        Instantiate(Bullet, shotPoint.position, transform.rotation);
-        //        timeBulletShots = startTimeBulletShots;
-        //    }
-        //    else {
-        //        timeBulletShots -= Time.deltaTime;
-        //    }
-        //}
-        Fire();
-        Reload();
+        Attack();
+        CoolDown();
     }
 
-    void Fire() {
+    void Attack()
+    {
+        Fire();
+        Smash();
+    }
+
+    void Smash() //물리공격
+    {
+        if (!Input.GetMouseButton(0))
+            return;
+        if (curAtkCoolTime < atkCoolTime)
+            return;
+        anim.SetTrigger("MagicAttack");//PhysicAttack 모션 추가하고 바꿀 것
+        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
+        foreach (Collider2D collider in collider2Ds)
+        {
+            Debug.Log(collider.tag);
+            if (collider.CompareTag("Enemy")) {
+                collider.GetComponent<EnemyDamage>().TakeDamage(atkDamage);
+            }
+        }
+
+        curAtkCoolTime = 0;
+
+    }
+
+    void Fire() { //마법공격
         if (!Input.GetMouseButton(1))
             return;
-        if (curShotDelay < maxShotDelay)
+        if (curAtkCoolTime < shotCoolTime)
             return;
+        anim.SetTrigger("MagicAttack");
 		GameObject bullet = Instantiate(Bullet, shotPoint.position, Quaternion.Euler(0f, 0f, rotateDegree / 2));
 		Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
-		rigid.AddForce(/*Vector2.up*/ new Vector2(dx * shotPower, dy * shotPower), ForceMode2D.Impulse);
-		curShotDelay = 0;
+        rigid.AddForce(new Vector2(dx / (Mathf.Abs(dx) + Mathf.Abs(dy)) * shotPower, dy / (Mathf.Abs(dx) + Mathf.Abs(dy)) * shotPower), ForceMode2D.Impulse);
+        curAtkCoolTime = 0;
     }
 
-    void Reload() {
-        curShotDelay += Time.deltaTime;
+    void CoolDown() { // 쿨타임 재는 함수
+        curAtkCoolTime += Time.deltaTime;
+    }
+
+    private void OnDrawGizmos() // 물리공격 범위 보여줌(디버그 전용)
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(pos.position, boxSize);
     }
 }

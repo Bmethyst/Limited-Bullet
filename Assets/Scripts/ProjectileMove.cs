@@ -16,7 +16,6 @@ public class ProjectileMove : MonoBehaviour {
     }
     void Update() {
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up);
-        //transform.Translate(transform.right * speed * Time.deltaTime); // 발사체가 날아감 (속도조절)
 
         if (hitInfo.collider != null) {
             if (hitInfo.collider.CompareTag("Enemy")) {

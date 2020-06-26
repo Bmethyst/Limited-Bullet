@@ -33,7 +33,7 @@ public class EnemyMove : MonoBehaviour {
 	void Think() {
 		nextMove = Random.Range(-1, 2);
 
-		anim.SetInteger("WalkSpeed", nextMove);
+		anim.SetInteger("WalkDir", nextMove);
 		if (nextMove != 0) spriteRenderer.flipX = nextMove == 1;
 
 		float nextThinkTime = Random.Range(2f, 5f);
