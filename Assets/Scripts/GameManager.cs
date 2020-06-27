@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -62,12 +62,13 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (player.transform.position.x > 85 && !bossEntered) { // 적당한 숫자
+        if (player.transform.position.x > 170 && player.transform.position.y < -25 && !bossEntered) { // 적당한 숫자
             BosssBar.SetActive(true);
             BossHPImage.rectTransform.localScale = new Vector2(3f, 3f);
             bossEntered = true;
 
             //bgm 변경
+			
             audioSource.clip = audioBoss;
             audioSource.Play();
         }
