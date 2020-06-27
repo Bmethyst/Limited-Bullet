@@ -11,6 +11,10 @@ public class SpiderAttack : MonoBehaviour
     RaycastHit2D ray2;
     RaycastHit2D hitRay;
 
+    AudioSource audioSource;
+    public AudioClip audioAttack;
+
+
     public Transform pos;
     public Vector2 boxSize;
     public GameObject Web;
@@ -32,7 +36,7 @@ public class SpiderAttack : MonoBehaviour
     private void Awake() {
         anim = GetComponent<Animator>();
         Player = GameObject.Find("Player");
-
+        audioSource = GetComponent<AudioSource>();
     }
     void Update() {
         Vector3 playerPos = Player.GetComponent<Transform>().position;
@@ -92,6 +96,7 @@ public class SpiderAttack : MonoBehaviour
         GameObject web = Instantiate(Web, shotPoint.position, Quaternion.Euler(0f, 0f, degree));
         Rigidbody2D rigid = web.GetComponent<Rigidbody2D>();
         rigid.AddForce(new Vector2((-1f) * shotPower * transform.localScale.x, 0), ForceMode2D.Impulse);
+        audioSource.PlayOneShot(audioAttack);
 
     }
     private void delayedHitmotionOff() {

@@ -27,11 +27,11 @@ public class EnemyProjectileMove : MonoBehaviour
         if (hitInfo.collider != null) {
             if (!tag.Equals("Web")) {
                 if (hitInfo.collider.gameObject.layer.Equals(8)) {
-                    Debug.Log(hitInfo.collider.name);
+                    //Debug.Log(hitInfo.collider.name);
                     DestroyProjectile();
                 }
                 else if (hitInfo.collider.gameObject.layer.Equals(9)) {
-                    Debug.Log(hitInfo.collider.name);
+                    //Debug.Log(hitInfo.collider.name);
                     hitInfo.collider.GetComponent<PlayerMove>().OnDamaged(transform.position);
                     DestroyProjectile();
 

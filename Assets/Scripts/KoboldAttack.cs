@@ -10,6 +10,10 @@ public class KoboldAttack : MonoBehaviour {
     RaycastHit2D ray2;
     RaycastHit2D hitRay;
 
+    AudioSource audioSource;
+    public AudioClip audioAttack;
+
+
     public Transform pos;
     public Vector2 boxSize;
     public GameObject Arrow;
@@ -32,7 +36,7 @@ public class KoboldAttack : MonoBehaviour {
     private void Awake() {
         anim = GetComponent<Animator>();
         Player = GameObject.Find("Player");
-
+        audioSource = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -104,7 +108,7 @@ public class KoboldAttack : MonoBehaviour {
         GameObject arrow = Instantiate(Arrow, shotPoint.position, Quaternion.Euler(0f, 0f, degree));
         Rigidbody2D rigid = arrow.GetComponent<Rigidbody2D>();
         rigid.AddForce(new Vector2(dx / (Mathf.Abs(dx) + Mathf.Abs(dy)) * shotPower, Mathf.Abs(dy) / (Mathf.Abs(dx) + Mathf.Abs(dy)) * shotPower*3), ForceMode2D.Impulse);
-
+        audioSource.PlayOneShot(audioAttack);
     }
     private void delayedHitmotionOff() {
         GetComponent<EnemyMove>().StopTrigger();

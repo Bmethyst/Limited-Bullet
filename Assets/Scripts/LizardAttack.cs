@@ -13,8 +13,9 @@ public class LizardAttack : MonoBehaviour
 
     public Transform pos;
     public Vector2 boxSize;
+    AudioSource audioSource;
+    public AudioClip audioAttack;
 
-    
     public float atkCoolTime; // 물리 공격 쿨타임
     public float curAtkCoolTime; // 이전 공격 간 간격
 
@@ -25,6 +26,7 @@ public class LizardAttack : MonoBehaviour
     private void Awake() {
         anim = GetComponent<Animator>();
         Player = GameObject.Find("Player");
+        audioSource = GetComponent<AudioSource>();
 
     }
     void Update()
@@ -98,6 +100,8 @@ public class LizardAttack : MonoBehaviour
                 collider.GetComponent<PlayerMove>().OnDamaged(transform.position);
             }
         }
+        audioSource.PlayOneShot(audioAttack);
+
     }
     private void delayedHitmotionOff() {
         GetComponent<EnemyMove>().StopTrigger();

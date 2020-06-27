@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
+    AudioSource audioSource;
+    public AudioClip audioAttack;
+
     Animator anim;
     GameObject Player;
 
@@ -25,6 +28,7 @@ public class PlayerAttack : MonoBehaviour
     private void Awake() {
         Player = GameObject.Find("Player");
         anim = Player.GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
     }
     void Update()
@@ -64,6 +68,8 @@ public class PlayerAttack : MonoBehaviour
         if (curAtkCoolTime < atkCoolTime)
             return;
         anim.SetTrigger("PhysicAttack");//PhysicAttack 모션 추가하고 바꿀 것
+        audioSource.PlayOneShot(audioAttack);
+
         Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
         foreach (Collider2D collider in collider2Ds)
         {
@@ -92,7 +98,8 @@ public class PlayerAttack : MonoBehaviour
         if (gameManager.Mana <= 0)
             return;
 	    anim.SetTrigger("MagicAttack");
-		GameObject bullet = Instantiate(Bullet, shotPoint.position, Quaternion.Euler(0f, 0f, rotateDegree / 2));
+        audioSource.PlayOneShot(audioAttack);
+        GameObject bullet = Instantiate(Bullet, shotPoint.position, Quaternion.Euler(0f, 0f, rotateDegree / 2));
 		Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
         rigid.AddForce(new Vector2(dx / (Mathf.Abs(dx) + Mathf.Abs(dy)) * shotPower, dy / (Mathf.Abs(dx) + Mathf.Abs(dy)) * shotPower), ForceMode2D.Impulse);
         gameManager.ManaDown();

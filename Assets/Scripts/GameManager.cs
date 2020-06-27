@@ -24,15 +24,23 @@ public class GameManager : MonoBehaviour
     SpriteRenderer spriteRenderer;
     private CameraControl  u_camera;
 
+    AudioSource audioSource;
+    public AudioClip audioBoss;
+    public AudioClip audioClear;
+
+
     private void Awake() {
+        Screen.SetResolution(1366, 768, false);
         capsuleCollider = player.GetComponent<CapsuleCollider2D>();
         polygonCollider = player.GetComponent<PolygonCollider2D>();
         circleCollider = player.GetComponent<CircleCollider2D>();
         spriteRenderer = player.GetComponent<SpriteRenderer>();
         u_camera = GameObject.Find("Main Camera").GetComponent< CameraControl>();
         isescTriggered = false;
-        BossHPImage.rectTransform.localScale = new Vector2(0, 3);
+        BossHPImage.rectTransform.localScale = new Vector2(0.0001f, 3f);
         bossEntered = false;
+        audioSource = GetComponent<AudioSource>();
+
     }
     void Start()
     {
@@ -54,12 +62,14 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (player.transform.position.x > 70 && !bossEntered) { // 적당한 숫자
+        if (player.transform.position.x > 85 && !bossEntered) { // 적당한 숫자
             BosssBar.SetActive(true);
-            BossHPImage.rectTransform.localScale = new Vector2(3, 3);
+            BossHPImage.rectTransform.localScale = new Vector2(3f, 3f);
             bossEntered = true;
 
             //bgm 변경
+            audioSource.clip = audioBoss;
+            audioSource.Play();
         }
     }
 
@@ -140,6 +150,8 @@ public class GameManager : MonoBehaviour
             BosssBar.SetActive(false);
             clear.SetActive(true);
 
+            audioSource.clip = audioClear;
+            audioSource.Play();
             //승리 bgm 재생
         }
     }

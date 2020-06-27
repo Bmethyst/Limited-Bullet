@@ -113,7 +113,7 @@ public class BossMove : MonoBehaviour
 			rigid.velocity = new Vector2((-1) * maxSpeed, rigid.velocity.y);
         }
 
-        Vector2 ray_pos = new Vector2(transform.position.x, transform.position.y);
+        Vector2 ray_pos = new Vector2(transform.position.x, transform.position.y-2.5f);
         Debug.DrawRay(ray_pos, Vector2.left, new Color(1, 1, 0));
         Debug.DrawRay(ray_pos, Vector2.right, new Color(0, 1, 1));
         if(transform.localScale.x == 1)

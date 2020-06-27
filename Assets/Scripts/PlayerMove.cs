@@ -14,6 +14,29 @@ public class PlayerMove : MonoBehaviour
     CircleCollider2D circleCollider;
     public GameManager gameManager;
 
+    public AudioClip audioJump;
+    public AudioClip audioAttack;
+    public AudioClip audioDamaged;
+    public AudioClip audioItem;
+
+    AudioSource audioSource;
+
+    void PlaySound(string action) {
+        switch (action) {
+            case "JUMP":
+                audioSource.PlayOneShot(audioJump);
+                break;
+            case "ATTACK":
+                audioSource.PlayOneShot(audioAttack);
+                break;
+            case "DAMAGED":
+                audioSource.PlayOneShot(audioDamaged);
+                break;
+            case "ITEM":
+                audioSource.PlayOneShot(audioItem);
+                break;
+        }
+    }
     void Awake() {
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -21,6 +44,7 @@ public class PlayerMove : MonoBehaviour
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         polygonCollider = GetComponent<PolygonCollider2D>();
         circleCollider = GetComponent<CircleCollider2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update() {
@@ -28,6 +52,7 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetButtonDown("Jump") && !anim.GetBool("isJumping")) { 
             rigid.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             anim.SetBool("isJumping", true);
+            PlaySound("JUMP");
         }
 
 
@@ -87,6 +112,7 @@ public class PlayerMove : MonoBehaviour
 
             if (isRed) gameManager.HealthUp();
             else if (isBlue) gameManager.ManaUp();
+            PlaySound("ITEM");
 
             collision.gameObject.SetActive(false);
         }
@@ -95,6 +121,7 @@ public class PlayerMove : MonoBehaviour
     public void OnDamaged(Vector2 targetPos) {
         //무적 레이어
         gameObject.layer = 13;
+        PlaySound("DAMAGED");
 
         //character 깜빡임
         spriteRenderer.color = new Color(1, 1, 1, 0.4f);
