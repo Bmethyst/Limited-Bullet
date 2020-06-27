@@ -31,11 +31,6 @@ public class PlayerMove : MonoBehaviour
             rigid.velocity = new Vector2(0, rigid.velocity.y);
         }
 
-        //if (Input.GetButton("Horizontal")) {
-        //    //spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
-        //    if (Input.GetAxisRaw("Horizontal") == -1)
-        //        transform.localScale.Set(-1, 1, 1);
-        //}
 
         if (Mathf.Abs(rigid.velocity.normalized.x) < 0.3f)
             anim.SetBool("isWalking", false);
@@ -65,7 +60,6 @@ public class PlayerMove : MonoBehaviour
         if (rigid.velocity.y < 0) {
             Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
             RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1.5f, LayerMask.GetMask("Platform"));
-            //Debug.Log(rayHit.distance);
             if (rayHit.collider != null) {
                 if (rayHit.distance < 1)
                     anim.SetBool("isJumping", false);
@@ -74,18 +68,18 @@ public class PlayerMove : MonoBehaviour
 	}
 
     void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.tag == "Enemy") {
+        if (collision.gameObject.layer.Equals(10)) {
             OnDamaged(collision.transform.position);
         }
     }
     
-    void OnDamaged(Vector2 targetPos) {
+    public void OnDamaged(Vector2 targetPos) {
         gameObject.layer = 13;
 
         spriteRenderer.color = new Color(1, 1, 1, 0.4f);
 
         int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;
-        rigid.AddForce(new Vector2(dirc, 1) * 7, ForceMode2D.Impulse);
+        rigid.AddForce(new Vector2(dirc, 0.5f) * 7, ForceMode2D.Impulse);
 
         //Animation
         anim.SetTrigger("Damaged");
@@ -94,7 +88,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     void OffDamaged() {
-        gameObject.layer = 10;
+        gameObject.layer = 9;
         spriteRenderer.color = new Color(1, 1, 1, 1);
     }
 

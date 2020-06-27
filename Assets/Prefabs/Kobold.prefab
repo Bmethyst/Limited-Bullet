@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5783007146903169219}
   - component: {fileID: 8830109635556421819}
   - component: {fileID: 888124051046491081}
+  - component: {fileID: 8716426941511981695}
   m_Layer: 10
   m_Name: Kobold
   m_TagString: Enemy
@@ -32,7 +33,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.276, y: 0.946, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2513597466822741545}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -118,7 +120,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextMove: 0
-  customMoveSpeed: 4
+  customMoveSpeed: 2
+  RushMoveSpeed: 0
+  isStop: 0
+  isTracing: 0
+  enemyType: 2
 --- !u!114 &5783007146903169219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,3 +176,51 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &8716426941511981695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1950523605067037868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13efd267e6173d84cbe7a45eb062303e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pos: {fileID: 0}
+  boxSize: {x: 0, y: 0}
+  Arrow: {fileID: 3979060416011915055, guid: a8f75e1e08ed08e4d8c0e0a9dc98e5fb, type: 3}
+  shotPoint: {fileID: 2513597466822741545}
+  atkCoolTime: 2
+  curAtkCoolTime: 0
+--- !u!1 &4612002873513984639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2513597466822741545}
+  m_Layer: 10
+  m_Name: bow
+  m_TagString: Enemy
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2513597466822741545
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4612002873513984639}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.073, y: -0.695, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4674017448883179028}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

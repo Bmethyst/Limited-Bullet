@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8501633157454284086}
   - component: {fileID: 2823538896004479262}
   - component: {fileID: 1290436289686983845}
-  - component: {fileID: -3278290845175819388}
   - component: {fileID: 3302914174929332811}
+  - component: {fileID: 4800785322892305149}
   m_Layer: 11
   m_Name: fireBullet
   m_TagString: PlayerProjectile
@@ -105,27 +105,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-3278290845175819388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549729340610542924}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71079764cb3d0fd4f80f7c2864310c6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  lifeTime: 2
-  distance: 0
-  damage: 2
-  whatIsSolid:
-    serializedVersion: 2
-    m_Bits: 0
-  destroyEffect: {fileID: 1286731977208531233, guid: 2aa63a036b799fa45afff9431160caf5,
-    type: 3}
 --- !u!58 &3302914174929332811
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -142,3 +121,24 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.32
+--- !u!114 &4800785322892305149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549729340610542924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1824b54bfc137a7478b9efa4b2a7006e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  lifeTime: 0.6
+  distance: 0
+  damage: 2
+  whatIsSolid:
+    serializedVersion: 2
+    m_Bits: 0
+  destroyEffect: {fileID: 1286731977208531233, guid: 2aa63a036b799fa45afff9431160caf5,
+    type: 3}

@@ -57,16 +57,16 @@ public class PlayerAttack : MonoBehaviour
 
     void Smash() //물리공격
     {
+
         if (!Input.GetMouseButton(0))
             return;
         if (curAtkCoolTime < atkCoolTime)
             return;
-        anim.SetTrigger("MagicAttack");//PhysicAttack 모션 추가하고 바꿀 것
+        anim.SetTrigger("PhysicAttack");//PhysicAttack 모션 추가하고 바꿀 것
         Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
         foreach (Collider2D collider in collider2Ds)
         {
-            Debug.Log(collider.tag);
-            if (collider.CompareTag("Enemy")) {
+            if (collider.gameObject.layer.Equals(10)) {
                 collider.GetComponent<EnemyDamage>().TakeDamage(atkDamage);
             }
         }
@@ -80,7 +80,10 @@ public class PlayerAttack : MonoBehaviour
             return;
         if (curAtkCoolTime < shotCoolTime)
             return;
-        anim.SetTrigger("MagicAttack");
+        if ((Player.GetComponent<Transform>().localScale.x == -1 && dx > 0) ||
+            (Player.GetComponent<Transform>().localScale.x == 1 && dx < 0))
+            return;
+	    anim.SetTrigger("MagicAttack");
 		GameObject bullet = Instantiate(Bullet, shotPoint.position, Quaternion.Euler(0f, 0f, rotateDegree / 2));
 		Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
         rigid.AddForce(new Vector2(dx / (Mathf.Abs(dx) + Mathf.Abs(dy)) * shotPower, dy / (Mathf.Abs(dx) + Mathf.Abs(dy)) * shotPower), ForceMode2D.Impulse);

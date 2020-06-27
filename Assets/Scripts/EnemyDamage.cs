@@ -27,28 +27,18 @@ public class EnemyDamage : MonoBehaviour
     void Update()
     {
         if (health <= 0) {
-
-
             Destroy(gameObject);
         }
     }
 
     public void TakeDamage(float damage) {
         anim.SetTrigger("Damaged");
-        rigid.velocity = new Vector2(0, rigid.velocity.y);
+        enemyStop();
+        Invoke("enemyStop", 0.5f);
+
         health -= damage;
     }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.tag == "PlayerProjectile") {
-            OnDamaged();
-            Debug.Log(collision);
-        }
-    }
-
-    void OnDamaged() {
-        anim.SetTrigger("Damaged");
-        rigid.velocity = new Vector2(0, rigid.velocity.y);
+    void enemyStop() {
+        GetComponent<EnemyMove>().StopTrigger();
     }
 }
