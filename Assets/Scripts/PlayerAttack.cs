@@ -11,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
     public Transform shotPoint;
     public Transform pos;
     public Vector2 boxSize;
+    public GameManager gameManager;
 
     public float shotCoolTime; // 마법 공격 쿨타임
     public float atkCoolTime; // 물리 공격 쿨타임
@@ -67,11 +68,16 @@ public class PlayerAttack : MonoBehaviour
         foreach (Collider2D collider in collider2Ds)
         {
             if (collider.gameObject.layer.Equals(10)) {
-                collider.GetComponent<EnemyDamage>().TakeDamage(atkDamage);
-            }
-        }
+                if (collider.gameObject.tag == "boss") {
+                    collider.GetComponent<BossMove>().Damaged(1);
+                }
+				else {
+					collider.GetComponent<EnemyDamage>().TakeDamage(atkDamage);
+				}
+			}
+		}
 
-        curAtkCoolTime = 0;
+		curAtkCoolTime = 0;
 
     }
 
@@ -83,10 +89,13 @@ public class PlayerAttack : MonoBehaviour
         if ((Player.GetComponent<Transform>().localScale.x == -1 && dx > 0) ||
             (Player.GetComponent<Transform>().localScale.x == 1 && dx < 0))
             return;
+        if (gameManager.Mana <= 0)
+            return;
 	    anim.SetTrigger("MagicAttack");
 		GameObject bullet = Instantiate(Bullet, shotPoint.position, Quaternion.Euler(0f, 0f, rotateDegree / 2));
 		Rigidbody2D rigid = bullet.GetComponent<Rigidbody2D>();
         rigid.AddForce(new Vector2(dx / (Mathf.Abs(dx) + Mathf.Abs(dy)) * shotPower, dy / (Mathf.Abs(dx) + Mathf.Abs(dy)) * shotPower), ForceMode2D.Impulse);
+        gameManager.ManaDown();
         curAtkCoolTime = 0;
     }
 

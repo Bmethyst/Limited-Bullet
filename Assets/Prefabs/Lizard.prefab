@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1081699876293577382}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.21, y: -0.28, z: -0.5198881}
+  m_LocalPosition: {x: -1.05, y: -0.28, z: -0.5198881}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6924607738099284046}
@@ -263,7 +263,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 5
-  deathEffect: {fileID: 0}
+  deathEffect: {fileID: 6472057759548322905, guid: a83a51682bb3f3b4f98da2da01ed093f,
+    type: 3}
 --- !u!114 &3787883028285685656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,6 +278,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pos: {fileID: 1349977442748856819}
-  boxSize: {x: 2, y: 1.7}
+  boxSize: {x: 1, y: 1.7}
   atkCoolTime: 1.2
   curAtkCoolTime: 0

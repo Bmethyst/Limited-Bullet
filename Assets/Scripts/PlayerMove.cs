@@ -9,11 +9,18 @@ public class PlayerMove : MonoBehaviour
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
     Animator anim;
+    CapsuleCollider2D capsuleCollider;
+    PolygonCollider2D polygonCollider;
+    CircleCollider2D circleCollider;
+    public GameManager gameManager;
 
     void Awake() {
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        polygonCollider = GetComponent<PolygonCollider2D>();
+        circleCollider = GetComponent<CircleCollider2D>();
     }
 
     void Update() {
@@ -72,11 +79,28 @@ public class PlayerMove : MonoBehaviour
             OnDamaged(collision.transform.position);
         }
     }
-    
+
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.tag == "Item") {
+            bool isRed = collision.gameObject.name.Contains("Red");
+            bool isBlue = collision.gameObject.name.Contains("Blue");
+
+            if (isRed) gameManager.HealthUp();
+            else if (isBlue) gameManager.ManaUp();
+
+            collision.gameObject.SetActive(false);
+        }
+    }
+
     public void OnDamaged(Vector2 targetPos) {
+        //무적 레이어
         gameObject.layer = 13;
 
+        //character 깜빡임
         spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+
+        //health down
+        gameManager.HealthDown();
 
         int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;
         rigid.AddForce(new Vector2(dirc, 0.5f) * 7, ForceMode2D.Impulse);
@@ -92,4 +116,15 @@ public class PlayerMove : MonoBehaviour
         spriteRenderer.color = new Color(1, 1, 1, 1);
     }
 
+    public void OnDie() { //체력 0
+        spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+
+        spriteRenderer.flipY = true;
+
+        capsuleCollider.enabled = false;
+        polygonCollider.enabled = false;
+        circleCollider.enabled = true;
+
+        rigid.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+    }
 }

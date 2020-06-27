@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -2830053993109014175}
   m_Layer: 12
   m_Name: spider_web
-  m_TagString: Enemy
+  m_TagString: Web
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

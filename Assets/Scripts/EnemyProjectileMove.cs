@@ -21,15 +21,17 @@ public class EnemyProjectileMove : MonoBehaviour
     }
     void Update() {
 
+        Debug.DrawRay(transform.position, transform.up, new Color(0, 1, 1));
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, transform.up, 0.5f);
 
         if (hitInfo.collider != null) {
             if (!tag.Equals("Web")) {
                 if (hitInfo.collider.gameObject.layer.Equals(8)) {
-                    Debug.Log("바닥 맞았음");
+                    Debug.Log(hitInfo.collider.name);
                     DestroyProjectile();
                 }
                 else if (hitInfo.collider.gameObject.layer.Equals(9)) {
+                    Debug.Log(hitInfo.collider.name);
                     hitInfo.collider.GetComponent<PlayerMove>().OnDamaged(transform.position);
                     DestroyProjectile();
 
@@ -41,28 +43,6 @@ public class EnemyProjectileMove : MonoBehaviour
 
             }
         }
-    //    RaycastHit2D hitInfoPlatform = Physics2D.Raycast(transform.position, transform.up, 0.5f, 8);
-    //    RaycastHit2D hitInfoPlayer = Physics2D.Raycast(transform.position, transform.up, 0.5f, 9);
-    //    RaycastHit2D hitInfoEnemy = Physics2D.Raycast(transform.position, transform.up, 0.5f, 10);
-    //    Debug.Log(hitInfoPlatform);
-    //    Debug.Log(hitInfoPlayer);
-
-    //    if (!tag.Equals("Web")) {
-				//if (hitInfoPlatform.collider != null) {
-				//	Debug.Log(hitInfoPlatform);
-				//	Debug.Log(hitInfoPlayer);
-				//	DestroyProjectile();
-				//}
-				//else if (hitInfoPlayer.collider != null) {
-    //                hitInfoPlayer.collider.GetComponent<PlayerMove>().OnDamaged(transform.position);
-    //                DestroyProjectile();
-
-    //            }
-    //        }
-    //        else if(hitInfoPlayer.collider != null) {
-    //            hitInfoPlayer.collider.GetComponent<PlayerMove>().OnDamaged(transform.position);
-    //            DestroyProjectile();
-    //        }
     }
     void DestroyProjectile() {
         if (destroyEffect != null)

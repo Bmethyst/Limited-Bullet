@@ -27,7 +27,12 @@ public class PlayerProjectileMove : MonoBehaviour
 
             if (hitInfo.collider.gameObject.layer.Equals(10)) {
                 //Debug.Log("맞았음");
-                hitInfo.collider.GetComponent<EnemyDamage>().TakeDamage(damage);
+                if (hitInfo.collider.gameObject.tag == "boss") {
+                    hitInfo.collider.GetComponent<BossMove>().Damaged(2);
+                }
+                else { 
+                    hitInfo.collider.GetComponent<EnemyDamage>().TakeDamage(damage);
+                }
                 DestroyProjectile();
             }
             else if (hitInfo.collider.gameObject.layer.Equals(8)) {

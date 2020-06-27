@@ -39,7 +39,7 @@ public class CameraControl : MonoBehaviour
 			return;
 		}
         if (player.position.y - cameraTransform.position.y > 1.2f) { //점프를 하던 말던 캐릭터가 카메라에서 너무 위에 위치해있으면 카메라를 올림
-            cameraTransform.position = new Vector3(player.position.x, originalY + 0.02f, cameraTransform.position.z);
+            cameraTransform.position = new Vector3(player.position.x, originalY + 1.2f*Time.deltaTime, cameraTransform.position.z);
             return;
         }
 
@@ -50,7 +50,7 @@ public class CameraControl : MonoBehaviour
         } 
         else { //not jumping
             if ( cameraTransform.position.y - player.position.y < 1.2f) { //뛰어서 착지했을때 플레이어가 너무 높이있으면 카메라를 올림
-                cameraTransform.position = new Vector3(player.position.x, originalY + 0.02f, cameraTransform.position.z);
+                cameraTransform.position = new Vector3(player.position.x, originalY + 1.2f*Time.deltaTime, cameraTransform.position.z);
                 return;
             }
             else { 
@@ -59,5 +59,9 @@ public class CameraControl : MonoBehaviour
             }
         }
 
+    }
+
+    public void ResetCamera() {
+        cameraTransform.position = new Vector3(4, 2, cameraTransform.position.z);
     }
 }
