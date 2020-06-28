@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (player.transform.position.x > 170 && player.transform.position.y < -25 && !bossEntered) { // 적당한 숫자
+        if (player.transform.position.x > 170 && player.transform.position.y < -25 && !bossEntered) { // when player enter to boss zone transform
             BosssBar.SetActive(true);
             BossHPImage.rectTransform.localScale = new Vector2(3f, 3f);
             bossEntered = true;
@@ -153,6 +153,7 @@ public class GameManager : MonoBehaviour
 
             audioSource.clip = audioClear;
             audioSource.Play();
+			audioSource.loop=false;
             //승리 bgm 재생
         }
     }
