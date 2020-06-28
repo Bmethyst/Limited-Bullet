@@ -280,6 +280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pos: {fileID: 1349977442748856819}
   boxSize: {x: 1, y: 1.7}
+  audioAttack: {fileID: 8300000, guid: fe0b1f9aeb45b41b089175aeeabd5d95, type: 3}
   atkCoolTime: 1.2
   curAtkCoolTime: 0
 --- !u!82 &6441774868962751730

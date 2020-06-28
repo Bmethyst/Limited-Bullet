@@ -136,11 +136,11 @@ public class GameManager : MonoBehaviour
 
 
     public void exitgame() {
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
+        //#if UNITY_EDITOR
+        //    UnityEditor.EditorApplication.isPlaying = false;
+        //#else
             Application.Quit();
-        #endif
+        //#endif
     }
 
     public void bossDamage(float health) { // 18f는 보스 체력 바꾸면 바꿀 것
